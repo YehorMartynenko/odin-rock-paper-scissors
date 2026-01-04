@@ -34,6 +34,7 @@ function playRound(humanChoice, computerChoice) {
                 break;
             } else {
                 console.log("Tie!");
+                break;
             }
         case "paper":
               if (computerChoice === "scissors"){
@@ -46,6 +47,7 @@ function playRound(humanChoice, computerChoice) {
                 break;
             } else {
                 console.log("Tie!");
+                break;
             }
         case "scissors":
             if (computerChoice === "rock"){
@@ -58,11 +60,14 @@ function playRound(humanChoice, computerChoice) {
                 break;
             } else {
                 console.log("Tie!");
+                break;
             }
         default:
             console.log("It looks like you provided an invalid option");
             break;
     }
+
+    console.log("Your score: " + humanScore + ". Computer score: "+computerScore);
 }
 
 function getResultMessage(humanChoice, computerChoice, isWin){
@@ -73,4 +78,10 @@ function getResultMessage(humanChoice, computerChoice, isWin){
     }
 }
 
-playRound(getHumanChoice(), getComputerChoice());
+function playGame(){
+    for (let rounds = 0; rounds<5; rounds++){
+        playRound(getHumanChoice(), getComputerChoice());
+    }
+}
+
+playGame();
