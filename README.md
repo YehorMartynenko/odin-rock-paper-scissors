@@ -1,0 +1,1 @@
+Project: Rock Paper Scissors game from The Odin Project's foundation curriculum.
