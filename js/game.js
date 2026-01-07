@@ -1,5 +1,6 @@
 let humanScore = 0;
 let computerScore = 0;
+const options = document.querySelectorAll("button");
 
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 3);
@@ -21,46 +22,48 @@ function playRound(humanChoice, computerChoice) {
     if(computerScore < 5 && humanScore < 5){
         humanChoice = humanChoice.toLowerCase();
 
-        console.log("Your choice is " + humanChoice + ". Computer choice is " + computerChoice);
+        const info = document.querySelector(".roundInfo");
+        info.textContent = "Your choice is " + humanChoice + ". Computer choice is " + computerChoice;
 
+        let result = 0;
         switch(humanChoice) {
             case "rock":
                 if (computerChoice === "paper"){
-                    getResultMessage(humanChoice, computerChoice, false);
+                    result = -1;
                     computerScore++;
                     break;
                 } else if (computerChoice === "scissors"){
-                    getResultMessage(humanChoice, computerChoice, true);
+                    result = 1;
                     humanScore++;
                     break;
                 } else {
-                    console.log("Tie!");
+                    result = 0;
                     break;
                 }
             case "paper":
                 if (computerChoice === "scissors"){
-                    getResultMessage(humanChoice, computerChoice, false);
+                    result = -1;
                     computerScore++;
                     break;
                 } else if (computerChoice === "rock"){
-                    getResultMessage(humanChoice, computerChoice, true);
+                    result = 1;
                     humanScore++;
                     break;
                 } else {
-                    console.log("Tie!");
+                    result = 0;
                     break;
                 }
             case "scissors":
                 if (computerChoice === "rock"){
-                    getResultMessage(humanChoice, computerChoice, false);
+                    result = -1;
                     computerScore++;
                     break;
                 } else if (computerChoice === "paper"){
-                    getResultMessage(humanChoice, computerChoice, true);
+                    result = 1;
                     humanScore++;
                     break;
                 } else {
-                    console.log("Tie!");
+                    result = 0;
                     break;
                 }
             default:
@@ -68,22 +71,34 @@ function playRound(humanChoice, computerChoice) {
                 break;
         }
 
-        console.log("Your score: " + humanScore + ". Computer score: "+computerScore);
+        getResultMessage(humanChoice, computerChoice, result);
+
+        const score = document.querySelector(".score");
+        score.textContent = "Your score: " + humanScore + ". Computer score: "+computerScore
     } else {
         console.log("End");
+        options.forEach(option => {
+            option.style.backgroundColor = "#cccccc";
+            option.style.border = "1px solid #999999";
+        })
+        const matchResult = document.querySelector(".matchResult");
+        humanScore === 5 
+        ? matchResult.textContent = "You reached 5 points and won this game" 
+        : matchResult.textContent = "Your opponent reached 5 points and won this game";
     }
 }
 
-function getResultMessage(humanChoice, computerChoice, isWin){
-    if(isWin){
-        console.log("You won! " + humanChoice +" beats " + computerChoice);
-    }  else {
-        console.log("You lost. " + computerChoice + " beats " + humanChoice);
+function getResultMessage(humanChoice, computerChoice, roundResult){
+    const result = document.querySelector(".roundResult");
+    if(roundResult === 1){
+        result.textContent = "You won this round! " + humanChoice +" beats " + computerChoice;
+    }  else if (roundResult === -1) {
+        result.textContent = "You lost this round. " + computerChoice + " beats " + humanChoice;
+    } else {
+        result.textContent = "Tie";
     }
 }
 
-const options = document.querySelectorAll("button");
-console.log(options);
 
 options.forEach(option => {
     option.addEventListener("click", function (e) {
