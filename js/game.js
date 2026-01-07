@@ -18,56 +18,60 @@ function getHumanChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-    humanChoice = humanChoice.toLowerCase();
+    if(computerScore < 5 && humanScore < 5){
+        humanChoice = humanChoice.toLowerCase();
 
-    console.log("Your choice is " + humanChoice + ". Computer choice is " + computerChoice);
+        console.log("Your choice is " + humanChoice + ". Computer choice is " + computerChoice);
 
-    switch(humanChoice) {
-        case "rock":
-            if (computerChoice === "paper"){
-                getResultMessage(humanChoice, computerChoice, false);
-                computerScore++;
+        switch(humanChoice) {
+            case "rock":
+                if (computerChoice === "paper"){
+                    getResultMessage(humanChoice, computerChoice, false);
+                    computerScore++;
+                    break;
+                } else if (computerChoice === "scissors"){
+                    getResultMessage(humanChoice, computerChoice, true);
+                    humanScore++;
+                    break;
+                } else {
+                    console.log("Tie!");
+                    break;
+                }
+            case "paper":
+                if (computerChoice === "scissors"){
+                    getResultMessage(humanChoice, computerChoice, false);
+                    computerScore++;
+                    break;
+                } else if (computerChoice === "rock"){
+                    getResultMessage(humanChoice, computerChoice, true);
+                    humanScore++;
+                    break;
+                } else {
+                    console.log("Tie!");
+                    break;
+                }
+            case "scissors":
+                if (computerChoice === "rock"){
+                    getResultMessage(humanChoice, computerChoice, false);
+                    computerScore++;
+                    break;
+                } else if (computerChoice === "paper"){
+                    getResultMessage(humanChoice, computerChoice, true);
+                    humanScore++;
+                    break;
+                } else {
+                    console.log("Tie!");
+                    break;
+                }
+            default:
+                console.log("It looks like you provided an invalid option");
                 break;
-            } else if (computerChoice === "scissors"){
-                getResultMessage(humanChoice, computerChoice, true);
-                humanScore++;
-                break;
-            } else {
-                console.log("Tie!");
-                break;
-            }
-        case "paper":
-              if (computerChoice === "scissors"){
-                getResultMessage(humanChoice, computerChoice, false);
-                computerScore++;
-                break;
-            } else if (computerChoice === "rock"){
-                getResultMessage(humanChoice, computerChoice, true);
-                humanScore++;
-                break;
-            } else {
-                console.log("Tie!");
-                break;
-            }
-        case "scissors":
-            if (computerChoice === "rock"){
-                getResultMessage(humanChoice, computerChoice, false);
-                computerScore++;
-                break;
-            } else if (computerChoice === "paper"){
-                getResultMessage(humanChoice, computerChoice, true);
-                humanScore++;
-                break;
-            } else {
-                console.log("Tie!");
-                break;
-            }
-        default:
-            console.log("It looks like you provided an invalid option");
-            break;
+        }
+
+        console.log("Your score: " + humanScore + ". Computer score: "+computerScore);
+    } else {
+        console.log("End");
     }
-
-    console.log("Your score: " + humanScore + ". Computer score: "+computerScore);
 }
 
 function getResultMessage(humanChoice, computerChoice, isWin){
@@ -78,10 +82,11 @@ function getResultMessage(humanChoice, computerChoice, isWin){
     }
 }
 
-function playGame(){
-    for (let rounds = 0; rounds<5; rounds++){
-        playRound(getHumanChoice(), getComputerChoice());
-    }
-}
+const options = document.querySelectorAll("button");
+console.log(options);
 
-playGame();
+options.forEach(option => {
+    option.addEventListener("click", function (e) {
+        playRound(this.textContent, getComputerChoice());
+    })
+})
